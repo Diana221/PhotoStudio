@@ -63,11 +63,11 @@ public class AdditionalServices {
     @Override
     public String toString() {
         return
-                        "Parking=" + isParking() +
+                        "{Parking=" + isParking() +
                         ", WiFi=" + iswiFi() +
                         ", conditioner=" + isConditioner() +
                         ", dressingRoom=" + isDressingRoom() +
-                        ", makeUp=" + isMakeUp();
+                        ", makeUp=" + isMakeUp() +"}";
 
     }
 

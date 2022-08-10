@@ -26,11 +26,11 @@ public class VideoCamera extends Camera {
     @Override
     public String toString() {
         return
-                "Camera Type='" + getCameraType() + '\'' +
+                "{Camera Type=" + getCameraType() + '\'' +
                 ", image Quality=" + getImageQuality() +
                 ", color Space=" + getColorSpace() +
                 ", white Balance=" + getWhiteBalance() +
-                ", shutter speed=" + getShutterSpeed();
+                ", shutter speed=" + getShutterSpeed() + "}";
     }
 
     @Override

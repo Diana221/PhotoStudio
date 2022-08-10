@@ -52,10 +52,10 @@ public class InteriorItems {
 
     @Override
     public String toString() {
-        return "Panoramic Windows=" + isPanoramicWindows() +
+        return "{Panoramic Windows=" + isPanoramicWindows() +
                 ", fireplace=" + isFireplace() +
                 ", carpet=" + isCarpet() +
-                ", sofa=" + isSofa();
+                ", sofa=" + isSofa() + "}";
     }
 
     @Override

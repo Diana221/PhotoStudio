@@ -33,11 +33,11 @@ public class Model extends Person {
     @Override
     public String toString() {
         return
-                "Name=" + getName() +
+                "{Name=" + getName() +
                 ", Surname = " + getSurname() +
-                ", PhoneNumber = " + getPhoneNumber() +
+                ", Phone Number = " + getPhoneNumber() +
                 ", Age = " + getAge() +
-                ", Experience =" + getExperience();
+                ", Experience =" + getExperience()+ "}";
     }
 
     @Override

@@ -82,7 +82,7 @@ public class Customer extends Person implements iRent, iPhotoShoot, iBackCall {
     }
 
     @Override
-    public void photoShoot(Studio[] studio) {
+    public void photoShoot() {
         logger.info("To order photo shoot enter studio number: ");
         Scanner number = new Scanner(System.in);
         try {
@@ -119,11 +119,11 @@ public class Customer extends Person implements iRent, iPhotoShoot, iBackCall {
     @Override
     public String toString() {
         return
-                "Name = " + getName() +
+                "{Name = " + getName() +
                         ", Surname = " + getSurname() +
-                        ", PhoneNumber = " + getPhoneNumber() +
+                        ", Phone Number = " + getPhoneNumber() +
                         ", Age = " + getAge() +
-                        ", Regular customer = " + isRegularCustomer();
+                        ", Regular customer = " + isRegularCustomer()+ "}";
     }
 
     @Override

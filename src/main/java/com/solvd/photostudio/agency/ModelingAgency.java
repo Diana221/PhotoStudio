@@ -10,6 +10,7 @@ import com.solvd.photostudio.photoShoot.Studio;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Objects;
 import java.util.Scanner;
@@ -18,24 +19,25 @@ import java.util.Scanner;
 public class ModelingAgency implements iRent, iPhotoShoot, iBackCall {
     private String agencyName;
     private int phoneNumber;
-    private Model[] models;
+    ArrayList<Model> models= new ArrayList<>();
 
     private static final Logger logger = LogManager.getLogger(ModelingAgency.class);
 
     public ModelingAgency() {
     }
 
-    public ModelingAgency(String agencyName, int phoneNumber, Model[] models) {
+    public ModelingAgency(String agencyName, int phoneNumber, ArrayList<Model> models) {
         this.agencyName = agencyName;
         this.phoneNumber = phoneNumber;
         this.models = models;
     }
 
-    public Model[] getModel() {
+
+    public ArrayList<Model> getModels() {
         return models;
     }
 
-    public void setModel(Model[] models) {
+    public void setModels(ArrayList<Model> models) {
         this.models = models;
     }
 
@@ -100,7 +102,7 @@ public class ModelingAgency implements iRent, iPhotoShoot, iBackCall {
     }
 
     @Override
-    public void photoShoot(Studio[] studio) {
+    public void photoShoot() {
         logger.info("To order photo shoot enter studio number: ");
         Scanner number = new Scanner(System.in);
         try {
@@ -139,7 +141,7 @@ public class ModelingAgency implements iRent, iPhotoShoot, iBackCall {
         return
                 "AgencyName='" + getAgencyName() + '\'' +
                         ", PhoneNumber=" + getPhoneNumber() +
-                        ", Models=" + Arrays.toString(getModel());
+                        ", Models=" + getModels();
     }
 
     @Override

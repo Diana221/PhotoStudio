@@ -38,13 +38,13 @@ public class Photographer extends Employee {
     @Override
     public String toString() {
         return
-                        "Name = " + getName() +
+                        "{Name = " + getName() +
                         ", Surname = " + getSurname() +
                         ", PhoneNumber = " + getPhoneNumber() +
                         ", Age = " + getAge() +
                         ", Camera=" + getEquipments() +
                         ", price=" + getPrice() +
-                        ", experience=" + getExperience();
+                        ", experience=" + getExperience()+ "}";
     }
 
     @Override

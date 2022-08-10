@@ -40,9 +40,9 @@ public class StudioType {
     @Override
     public String toString() {
         return
-                "Halls Number=" + getHallsNumber() +
-                ", background Type='" + getBackgroundType() +
-                ", style='" + getStyle();
+                "{Halls Number=" + getHallsNumber() +
+                ", background Type=" + getBackgroundType() +
+                ", style=" + getStyle() + "}";
     }
 
     @Override

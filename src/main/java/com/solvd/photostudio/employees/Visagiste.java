@@ -30,18 +30,18 @@ public class Visagiste extends Employee {
 
     @Override
     public void info() {
-       logger.info("\nInformation about visagiste");
+        logger.info("\nInformation about visagiste");
     }
 
     @Override
     public String toString() {
         return
-                        "Name = " + getName() +
+                "{Name = " + getName() +
                         ", Surname = " + getSurname() +
                         ", PhoneNumber = " + getPhoneNumber() +
                         ", Age = " + getAge() +
                         ", price=" + getPrice() +
-                        ", experience=" + getExperience();
+                        ", experience=" + getExperience() + "}";
 
     }
 
