@@ -3,23 +3,20 @@ package com.solvd.photostudio.photoShoot;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import java.util.HashSet;
-import java.util.LinkedList;
 import java.util.Objects;
-import java.util.Stack;
 
 public class Studio {
     private static final Logger logger = LogManager.getLogger(Studio.class);
-    LinkedList<InteriorItems> interiorItems;
-    Stack<AdditionalServices> additionalServices;
+    InteriorItems interiorItems;
+    AdditionalServices additionalServices;
     private int studioNumber;
-    private HashSet<StudioType> studioType;//location
+    private StudioType studioType;//location
     private int price;
 
     public Studio() {
     }
 
-    public Studio(int studioNumber, HashSet<StudioType> studioType, int price, LinkedList<InteriorItems> interiorItems, Stack<AdditionalServices> additionalServices) {
+    public Studio(int studioNumber, StudioType studioType, int price, InteriorItems interiorItems, AdditionalServices additionalServices) {
         this.studioNumber = studioNumber;
         this.studioType = studioType;
         this.price = price;
@@ -28,7 +25,7 @@ public class Studio {
     }
 
     public static <T> void show(T message) {
-        logger.info("Your notes: "+message);
+        logger.info("Your notes: " + message);
     }
 
     public int getStudioNumber() {
@@ -39,20 +36,28 @@ public class Studio {
         this.studioNumber = studioNumber;
     }
 
-    public LinkedList<InteriorItems> getInteriorItems() {
+    public InteriorItems getInteriorItems() {
         return interiorItems;
     }
 
-    public void setInteriorItems(LinkedList<InteriorItems> interiorItems) {
+    public void setInteriorItems(InteriorItems interiorItems) {
         this.interiorItems = interiorItems;
     }
 
-    public Stack<AdditionalServices> getAdditionalServices() {
+    public AdditionalServices getAdditionalServices() {
         return additionalServices;
     }
 
-    public void setAdditionalServices(Stack<AdditionalServices> additionalServices) {
+    public void setAdditionalServices(AdditionalServices additionalServices) {
         this.additionalServices = additionalServices;
+    }
+
+    public StudioType getStudioType() {
+        return studioType;
+    }
+
+    public void setStudioType(StudioType studioType) {
+        this.studioType = studioType;
     }
 
     public int getPrice() {
@@ -63,21 +68,12 @@ public class Studio {
         this.price = price;
     }
 
-    public HashSet<StudioType> getStudioType() {
-        return studioType;
-    }
-
-    public void setStudioType(HashSet<StudioType> studioType) {
-        this.studioType = studioType;
-    }
 
     @Override
     public String toString() {
-        return "{Studio number=" + getStudioNumber() +
-                ", studioType=" + getStudioType() +
-                ", Interior Items=" + getInteriorItems() +
-                ", Additional Services=" + getAdditionalServices() +
-                ", price=" + getPrice() + "}";
+        return "Studio number=" + getStudioNumber() +
+                ", studioType=" + getStudioType() + ", "
+                + getPrice() + "$";
     }
 
     @Override

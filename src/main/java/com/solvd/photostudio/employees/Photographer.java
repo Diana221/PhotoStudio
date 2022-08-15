@@ -10,15 +10,21 @@ import java.util.Objects;
 
 
 public class Photographer extends Employee {
+    private static final Logger logger = LogManager.getLogger(Photographer.class);
     private Equipments equipments;
     private int price;
-    private static final Logger logger = LogManager.getLogger(Photographer.class);
+
     public Photographer() {
     }
 
     public Photographer(String name, String surname, String phoneNumber, int age, Equipments equipments, int price, int experience) {
         super(name, surname, phoneNumber, age, experience);
         this.equipments = equipments;
+        this.price = price;
+    }
+
+    public Photographer(String name, String surname, String phoneNumber, int age, int price, int experience) {
+        super(name, surname, phoneNumber, age, experience);
         this.price = price;
     }
 
@@ -32,19 +38,17 @@ public class Photographer extends Employee {
 
     @Override
     public void info() {
-       logger.info("\nInformation about photographers");
+        logger.info("\nInformation about photographers");
     }
 
     @Override
     public String toString() {
         return
-                        "{Name = " + getName() +
-                        ", Surname = " + getSurname() +
-                        ", PhoneNumber = " + getPhoneNumber() +
-                        ", Age = " + getAge() +
-                        ", Camera=" + getEquipments() +
-                        ", price=" + getPrice() +
-                        ", experience=" + getExperience()+ "}";
+                getName() + " " +
+                        getSurname() + "(" +
+                        getPhoneNumber() + "), " +
+                        getPrice() + "$, " +
+                        "experience=" + getExperience() + "years";
     }
 
     @Override

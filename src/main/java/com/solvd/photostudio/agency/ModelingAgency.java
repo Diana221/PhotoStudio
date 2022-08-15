@@ -16,10 +16,10 @@ import java.util.Objects;
 import java.util.Scanner;
 
 
-public class ModelingAgency implements iRent, iPhotoShoot, iBackCall {
+public class ModelingAgency {
     private String agencyName;
     private int phoneNumber;
-    ArrayList<Model> models= new ArrayList<>();
+    private ArrayList<Model> models= new ArrayList<>();
 
     private static final Logger logger = LogManager.getLogger(ModelingAgency.class);
 
@@ -31,7 +31,6 @@ public class ModelingAgency implements iRent, iPhotoShoot, iBackCall {
         this.phoneNumber = phoneNumber;
         this.models = models;
     }
-
 
     public ArrayList<Model> getModels() {
         return models;
@@ -55,85 +54,6 @@ public class ModelingAgency implements iRent, iPhotoShoot, iBackCall {
 
     public void setPhoneNumber(int phoneNumber) {
         this.phoneNumber = phoneNumber;
-    }
-
-    @Override
-    public void rentStudio() {
-        logger.info("To rent studio enter studio number: ");
-        Scanner number = new Scanner(System.in);
-        try {
-            if (number.hasNextInt()) {
-                int studioNumber = number.nextInt();
-                if (studioNumber < 1 || studioNumber > 5) {
-                    throw new WrongStudioNumberException();
-                }
-                logger.info(getAgencyName() + ", studio number \"" + studioNumber + "\" was rented for you3! We are waiting for you!");
-                number.close();
-            } else logger.info("Enter studio number!");
-        } catch (WrongStudioNumberException e) {
-            logger.info(e.getMessage());
-        }
-    }
-
-    @Override
-    public void rentPhotographer() {
-        logger.info("To rent photographer enter some info:");
-        try {
-            logger.info("Photographer's name: ");
-            Scanner name = new Scanner(System.in);
-            if (!name.hasNextInt()) {
-                String photographerName = name.next();
-                logger.info("Photographer's surname: ");
-                Scanner surname = new Scanner(System.in);
-                if (!surname.hasNextInt()) {
-                    String photographerSurname = surname.next();
-                    logger.info(getAgencyName() + ", photographer " + photographerName + " " + photographerSurname + " was rented for you! We are waiting for you!");
-                } else {
-                    surname.next();
-                    logger.info("Enter surname!");
-                }
-            } else {
-                name.next();
-                logger.info("Enter name!");
-            }
-        } catch (Exception exception) {
-            logger.info(exception.getMessage());
-        }
-    }
-
-    @Override
-    public void photoShoot() {
-        logger.info("To order photo shoot enter studio number: ");
-        Scanner number = new Scanner(System.in);
-        try {
-            if (number.hasNextInt()) {
-                int studioNumber = number.nextInt();
-                if (studioNumber < 1 || studioNumber > 5) {
-                    throw new WrongStudioNumberException();
-                }
-                logger.info(getAgencyName() + ", Thank you for ordering photo shoot(your studio number is " + studioNumber + ")! We are waiting for you!");
-                number.close();
-            } else logger.info("Enter studio number!");
-        } catch (WrongStudioNumberException e) {
-            logger.info(e.getMessage());
-        }
-    }
-
-    @Override
-    public void callBack() {
-        logger.info("Enter your phone number (format 0987671616):");
-        Scanner number = new Scanner(System.in);
-        try {
-            String phoneNumber = number.next();
-            if (phoneNumber.matches("[-+]?\\d+") && phoneNumber.length() == 10) {
-                logger.info("Thank you! We will call you back soon!");
-                number.close();
-            } else {
-                throw new WrongPhoneNumberException();
-            }
-        } catch (WrongPhoneNumberException ex) {
-            logger.info(ex.getMessage());
-        }
     }
 
     @Override

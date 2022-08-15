@@ -1,8 +1,9 @@
 package com.solvd.photostudio.customers;
 
 import com.solvd.photostudio.abstractclassses.Person;
-import com.solvd.photostudio.exceptions.WrongPhoneNumberException;
+import com.solvd.photostudio.employees.Photographer;
 import com.solvd.photostudio.exceptions.WrongStudioNumberException;
+import com.solvd.photostudio.infogeneration.InfoGeneration;
 import com.solvd.photostudio.interfaces.iBackCall;
 import com.solvd.photostudio.interfaces.iPhotoShoot;
 import com.solvd.photostudio.interfaces.iRent;
@@ -10,12 +11,14 @@ import com.solvd.photostudio.photoShoot.Studio;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import java.util.LinkedList;
 import java.util.Objects;
 import java.util.Scanner;
 
 public class Customer extends Person implements iRent, iPhotoShoot, iBackCall {
-    private boolean regularCustomer;
     private static final Logger logger = LogManager.getLogger(Customer.class);
+    private boolean regularCustomer;
+
     public Customer() {
     }
 
@@ -39,81 +42,87 @@ public class Customer extends Person implements iRent, iPhotoShoot, iBackCall {
 
     @Override
     public void rentStudio() {
-        logger.info("To rent studio enter studio number: ");
-        Scanner number = new Scanner(System.in);
-        try {
-            if (number.hasNextInt()) {
-                int studioNumber = number.nextInt();
-                if (studioNumber < 1 || studioNumber > 5) {
-                    throw new WrongStudioNumberException();
-                }
-                logger.info(getName() + ", studio number \"" + studioNumber + "\" was rented for you! We are waiting for you!");
 
-            } else logger.info("Enter studio number!");
-        } catch (WrongStudioNumberException e) {
-            logger.info(e.getMessage());
+        int studioNumber = 0;
+
+        LinkedList<Studio> studios = InfoGeneration.GenerationStudioInfo();
+        for (Studio studio : studios) {
+            logger.info(studio);
         }
+
+        do {
+            try {
+                logger.info("To rent studio enter studio number: ");
+                Scanner number_ = new Scanner(System.in);
+                if (number_.hasNextInt()) {
+                    studioNumber = number_.nextInt();
+                    if (studioNumber > 0 && studioNumber <= studios.size()) {
+                        logger.info(getName() + ", studio number \"" + studioNumber + "\" was rented for you! We are waiting for you!");
+                        studioNumber = 1;
+                    } else {
+                        studioNumber = 0;
+                        throw new WrongStudioNumberException();
+                    }
+                }
+            } catch (WrongStudioNumberException ex) {
+                logger.error(ex.getMessage());
+            }
+        }
+        while (studioNumber == 0);
     }
 
     @Override
     public void rentPhotographer() {
-        logger.info("To rent photographer enter some info:");
-        try {
-            logger.info("Photographer's name: ");
-            Scanner name = new Scanner(System.in);
-            if (!name.hasNextInt()) {
-                String photographerName = name.next();
-                logger.info("Photographer's surname: ");
-                Scanner surname = new Scanner(System.in);
-                if (!surname.hasNextInt()) {
-                    String photographerSurname = surname.next();
-                    logger.info(getName() + ", photographer " + photographerName + " " + photographerSurname + " was rented for you! We are waiting for you!");
+        int i = 1;
+        int number = 0;
+        LinkedList<Photographer> photographers = InfoGeneration.GenerationPhotographerInfo();
+        for (Photographer photographer : photographers) {
+            logger.info(i + ". " + photographer);
+            i++;
+        }
+        do {
+            logger.info("To rent photographer enter photographer's number: ");
+            Scanner number_ = new Scanner(System.in);
+            if (number_.hasNextInt()) {
+                number = number_.nextInt();
+                if (number > 0 && number <= photographers.size()) {
+                    logger.info(getName() + ", photographer " + photographers.get(--number).getName() + " " + photographers.get(number).getSurname() + " was rented! We are waiting for you!");
+                    number = 1;
                 } else {
-                    surname.next();
-                    logger.info("Enter surname!");
+                    number = 0;
                 }
-            } else {
-                name.next();
-                logger.info("Enter name!");
             }
-        } catch (Exception exception) {
-            logger.info(exception.getMessage());
         }
+        while (number == 0);
     }
 
     @Override
-    public void photoShoot() {
-        logger.info("To order photo shoot enter studio number: ");
-        Scanner number = new Scanner(System.in);
-        try {
-            if (number.hasNextInt()) {
-                int studioNumber = number.nextInt();
-                if (studioNumber < 1 || studioNumber > 5) {
-                    throw new WrongStudioNumberException();
+    public void photoShoot(int studioNumbers) {
+        int studioNumber = 0;
+        LinkedList<Studio> studios = InfoGeneration.GenerationStudioInfo();
+        for (Studio studio : studios) {
+            logger.info(studio);
+        }
+        do {
+            try {
+                logger.info("To order photo shoot enter studio number: ");
+                Scanner number_ = new Scanner(System.in);
+                if (number_.hasNextInt()) {
+                    studioNumber = number_.nextInt();
+                    if (studioNumber > 0 && studioNumber <= studios.size()) {
+                        logger.info(getName() + ", Thank you for ordering photo shoot(your studio number is " + studioNumber + ")! We are waiting for you!");
+
+                        studioNumber = 1;
+                    } else {
+                        studioNumber = 0;
+                        throw new WrongStudioNumberException();
+                    }
                 }
-                logger.info(getName() + ", Thank you for ordering photo shoot(your studio number is " + studioNumber + ")! We are waiting for you!");
-
-            } else logger.info("Enter studio number!");
-        } catch (WrongStudioNumberException e) {
-            logger.info(e.getMessage());
-        }
-    }
-
-    @Override
-    public void callBack() {
-        logger.info("Enter your phone number (format 0987671616):");
-        Scanner number = new Scanner(System.in);
-        try {
-            String phoneNumber = number.next();
-            if (phoneNumber.matches("[-+]?\\d+") && phoneNumber.length() == 10) {
-                logger.info("Thank you! We will call you back soon!");
-                number.close();
-            } else {
-                throw new WrongPhoneNumberException();
+            } catch (WrongStudioNumberException ex) {
+                logger.error(ex.getMessage());
             }
-        } catch (WrongPhoneNumberException ex) {
-            logger.info(ex.getMessage());
         }
+        while (studioNumber == 0);
     }
 
     @Override
@@ -123,7 +132,7 @@ public class Customer extends Person implements iRent, iPhotoShoot, iBackCall {
                         ", Surname = " + getSurname() +
                         ", Phone Number = " + getPhoneNumber() +
                         ", Age = " + getAge() +
-                        ", Regular customer = " + isRegularCustomer()+ "}";
+                        ", Regular customer = " + isRegularCustomer() + "}";
     }
 
     @Override
@@ -138,5 +147,11 @@ public class Customer extends Person implements iRent, iPhotoShoot, iBackCall {
     @Override
     public int hashCode() {
         return Objects.hash(getAge());
+    }
+
+    @Override
+    public void callBack(Customer customer) {
+        logger.info(" We will call you back soon to number " + customer.getPhoneNumber() + "! Thank you!");
+
     }
 }
