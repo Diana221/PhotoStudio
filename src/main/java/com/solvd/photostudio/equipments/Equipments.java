@@ -70,4 +70,10 @@ public class Equipments {
     public int hashCode() {
         return Objects.hash(isSmokeMachines());
     }
+
+    @Override
+    public String toString() {
+        return "SmokeMachines:" + isSmokeMachines() +
+                ", " + getPhotoCamera() ;
+    }
 }

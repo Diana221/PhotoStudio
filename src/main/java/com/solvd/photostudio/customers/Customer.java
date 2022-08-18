@@ -8,6 +8,7 @@ import com.solvd.photostudio.interfaces.iBackCall;
 import com.solvd.photostudio.interfaces.iPhotoShoot;
 import com.solvd.photostudio.interfaces.iRent;
 import com.solvd.photostudio.photoShoot.Studio;
+import org.apache.commons.lang3.StringUtils;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -15,7 +16,7 @@ import java.util.LinkedList;
 import java.util.Objects;
 import java.util.Scanner;
 
-public class Customer extends Person implements iRent, iPhotoShoot, iBackCall {
+public class Customer extends Person implements iRent, iBackCall, iPhotoShoot {
     private static final Logger logger = LogManager.getLogger(Customer.class);
     private boolean regularCustomer;
 
@@ -41,11 +42,11 @@ public class Customer extends Person implements iRent, iPhotoShoot, iBackCall {
     }
 
     @Override
-    public void rentStudio() {
-
+    public int rentStudio() {
         int studioNumber = 0;
-
+        int n = 0;
         LinkedList<Studio> studios = InfoGeneration.GenerationStudioInfo();
+
         for (Studio studio : studios) {
             logger.info(studio);
         }
@@ -57,10 +58,17 @@ public class Customer extends Person implements iRent, iPhotoShoot, iBackCall {
                 if (number_.hasNextInt()) {
                     studioNumber = number_.nextInt();
                     if (studioNumber > 0 && studioNumber <= studios.size()) {
-                        logger.info(getName() + ", studio number \"" + studioNumber + "\" was rented for you! We are waiting for you!");
-                        studioNumber = 1;
+                        n = studioNumber;
+                        --n;
+                        logger.info(getName() + ", studio number \"" + studioNumber + "\" was rented!");
+                        logger.info("Information about studio: " + studios.get(n));
+                        if (isRegularCustomer()) {
+
+                            float salePrice = studios.get(n).getPrice() - (((float) studios.get(n).getPrice() / 100) * Customer.Sale.FIVE.getSale());
+                            logger.info(getName() + ", as a regular customer you have a sale " + Customer.Sale.FIVE.getSale() + "%!. Your price for studio is " + (int) salePrice + "$ instead of " + studios.get(n).getPrice() + "$");
+                        }
+                        n = 1;
                     } else {
-                        studioNumber = 0;
                         throw new WrongStudioNumberException();
                     }
                 }
@@ -68,12 +76,16 @@ public class Customer extends Person implements iRent, iPhotoShoot, iBackCall {
                 logger.error(ex.getMessage());
             }
         }
-        while (studioNumber == 0);
+        while (n == 0);
+        return studioNumber;
     }
 
     @Override
-    public void rentPhotographer() {
+    public String rentPhotographer() {
+        String photographerName = null;
+        String photographerSurname = null;
         int i = 1;
+        int n;
         int number = 0;
         LinkedList<Photographer> photographers = InfoGeneration.GenerationPhotographerInfo();
         for (Photographer photographer : photographers) {
@@ -85,8 +97,13 @@ public class Customer extends Person implements iRent, iPhotoShoot, iBackCall {
             Scanner number_ = new Scanner(System.in);
             if (number_.hasNextInt()) {
                 number = number_.nextInt();
+                n = number;
+                --n;
                 if (number > 0 && number <= photographers.size()) {
-                    logger.info(getName() + ", photographer " + photographers.get(--number).getName() + " " + photographers.get(number).getSurname() + " was rented! We are waiting for you!");
+                    photographerName = photographers.get(n).getName();
+                    photographerSurname = photographers.get(n).getSurname();
+                    logger.info(getName() + ", photographer " + photographerName + " " + photographerSurname +
+                            " was rented! We are waiting for you!");
                     number = 1;
                 } else {
                     number = 0;
@@ -94,45 +111,72 @@ public class Customer extends Person implements iRent, iPhotoShoot, iBackCall {
             }
         }
         while (number == 0);
+        return "Photographer: " + photographerName + " " + photographerSurname;
     }
 
     @Override
-    public void photoShoot(int studioNumbers) {
-        int studioNumber = 0;
-        LinkedList<Studio> studios = InfoGeneration.GenerationStudioInfo();
-        for (Studio studio : studios) {
-            logger.info(studio);
-        }
+    public String photoShoot() {
+        int photographer = 0;
+        String rentPhotographer = null;
+        int studioNum;
+        logger.info("Ordering photo shoot ");
+        studioNum = rentStudio();
+        logger.info(studioNum);
         do {
             try {
-                logger.info("To order photo shoot enter studio number: ");
-                Scanner number_ = new Scanner(System.in);
-                if (number_.hasNextInt()) {
-                    studioNumber = number_.nextInt();
-                    if (studioNumber > 0 && studioNumber <= studios.size()) {
-                        logger.info(getName() + ", Thank you for ordering photo shoot(your studio number is " + studioNumber + ")! We are waiting for you!");
-
-                        studioNumber = 1;
-                    } else {
-                        studioNumber = 0;
-                        throw new WrongStudioNumberException();
+                logger.info("If you want to choose photographer enter 1, if you want default photographer enter 2: ");
+                Scanner photographer_ = new Scanner(System.in);
+                if (photographer_.hasNextInt()) {
+                    photographer = photographer_.nextInt();
+                    if (photographer == 1) {
+                        rentPhotographer = rentPhotographer();
+                        logger.info("Thank you for ordering photo shoot(your "
+                                + rentPhotographer + "; number of studio is "
+                                + studioNum + ")!");
+                    } else if (photographer == 2) {
+                        rentPhotographer = StringUtils.join(InfoGeneration.GenerationPhotographerInfo().get(0).getName(),
+                                " ", InfoGeneration.GenerationPhotographerInfo().get(0).getSurname());
+                        logger.info("Thank you for ordering photo shoot(your photographer is "
+                                + rentPhotographer + "; number of studio is "
+                                + studioNum + ")!");
                     }
+                } else {
+                    throw new WrongStudioNumberException();
                 }
             } catch (WrongStudioNumberException ex) {
                 logger.error(ex.getMessage());
             }
         }
-        while (studioNumber == 0);
+        while (photographer == 0);
+        return "Ordered photoshoot(studio number: " + studioNum + "; Photographer: " + rentPhotographer + ")";
     }
 
     @Override
     public String toString() {
         return
-                "{Name = " + getName() +
-                        ", Surname = " + getSurname() +
-                        ", Phone Number = " + getPhoneNumber() +
-                        ", Age = " + getAge() +
-                        ", Regular customer = " + isRegularCustomer() + "}";
+                        getName() +
+                        " " + getSurname() +
+                        "(" + getPhoneNumber() +
+                        ") " + getAge() + " years old" +
+                        ", Regular customer = " + isRegularCustomer();
+    }
+
+    @Override
+    public void callBack(Customer customer) {
+        logger.info(" We will call you back soon to number " + customer.getPhoneNumber() + "! Thank you!");
+    }
+
+    public enum Sale {
+        FIVE(5), TEN(10), FIFTEEN(15);
+        private final int sale;
+
+        private Sale(int sale) {
+            this.sale = sale;
+        }
+
+        public int getSale() {
+            return sale;
+        }
     }
 
     @Override
@@ -147,11 +191,5 @@ public class Customer extends Person implements iRent, iPhotoShoot, iBackCall {
     @Override
     public int hashCode() {
         return Objects.hash(getAge());
-    }
-
-    @Override
-    public void callBack(Customer customer) {
-        logger.info(" We will call you back soon to number " + customer.getPhoneNumber() + "! Thank you!");
-
     }
 }

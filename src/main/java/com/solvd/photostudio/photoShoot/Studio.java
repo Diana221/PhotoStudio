@@ -1,5 +1,6 @@
 package com.solvd.photostudio.photoShoot;
 
+import com.solvd.photostudio.infogeneration.InfoGeneration;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -25,7 +26,7 @@ public class Studio {
     }
 
     public static <T> void show(T message) {
-        logger.info("Your notes: " + message);
+        logger.info("\nNotes: "+message+";\nContacts: " + InfoGeneration.GenerationContactInfo().get(0));
     }
 
     public int getStudioNumber() {

@@ -48,7 +48,8 @@ public class Photographer extends Employee {
                         getSurname() + "(" +
                         getPhoneNumber() + "), " +
                         getPrice() + "$, " +
-                        "experience=" + getExperience() + "years";
+                        "experience=" + getExperience() + "years"+
+                ", Equipments:{" + getEquipments() +"}";
     }
 
     @Override

@@ -5,9 +5,9 @@ import java.util.Objects;
 public class StudioType {
     private int hallsNumber;
     private String backgroundType;
-    private String style;
+    private Style style;
 
-    public StudioType(int hallsNumber, String backgroundType, String style) {
+    public StudioType(int hallsNumber, String backgroundType, Style style) {
         this.hallsNumber = hallsNumber;
         this.backgroundType = backgroundType;
         this.style = style;
@@ -29,11 +29,11 @@ public class StudioType {
         this.backgroundType = backgroundType;
     }
 
-    public String getStyle() {
+    public Style getStyle() {
         return style;
     }
 
-    public void setStyle(String style) {
+    public void setStyle(Style style) {
         this.style = style;
     }
 
@@ -55,5 +55,16 @@ public class StudioType {
     @Override
     public int hashCode() {
         return Objects.hash(getStyle());
+    }
+
+    public enum Style {
+        casual,
+        light,
+        glamour,
+        corporate,
+        forest,
+        wedding,
+        fashion,
+        birthday
     }
 }

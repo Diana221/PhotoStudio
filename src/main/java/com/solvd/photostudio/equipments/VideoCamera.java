@@ -10,7 +10,7 @@ public class VideoCamera extends Camera {
     public VideoCamera() {
     }
 
-    public VideoCamera(String cameraType, char imageQuality, char colorSpace, char whiteBalance, float shutterSpeed) {
+    public VideoCamera(String cameraType, String imageQuality, String colorSpace, String whiteBalance, float shutterSpeed) {
         super(cameraType, imageQuality, colorSpace, whiteBalance);
         this.shutterSpeed = shutterSpeed;
     }

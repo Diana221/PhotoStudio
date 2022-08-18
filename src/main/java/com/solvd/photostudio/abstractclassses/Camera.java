@@ -2,18 +2,19 @@ package com.solvd.photostudio.abstractclassses;
 
 public abstract class Camera {
     private String cameraType; // compact, bridge, DSLR and mirrorless cameras
-    private char imageQuality; //RAW
-    private char colorSpace; //sRGB
-    private char whiteBalance; //Auto
+    private String imageQuality; //RAW
+    private String colorSpace; //sRGB
+    private String whiteBalance; //Auto
 
     public Camera() {
     }
 
-    public Camera(String cameraType, char imageQuality, char colorSpace, char whiteBalance) {
+    public Camera(String cameraType, String imageQuality, String colorSpace, String whiteBalance) {
         this.cameraType = cameraType;
         this.imageQuality = imageQuality;
         this.colorSpace = colorSpace;
         this.whiteBalance = whiteBalance;
+
     }
 
     public String getCameraType() {
@@ -24,27 +25,27 @@ public abstract class Camera {
         this.cameraType = cameraType;
     }
 
-    public char getImageQuality() {
+    public String getImageQuality() {
         return imageQuality;
     }
 
-    public void setImageQuality(char imageQuality) {
+    public void setImageQuality(String imageQuality) {
         this.imageQuality = imageQuality;
     }
 
-    public char getColorSpace() {
+    public String getColorSpace() {
         return colorSpace;
     }
 
-    public void setColorSpace(char colorSpace) {
+    public void setColorSpace(String colorSpace) {
         this.colorSpace = colorSpace;
     }
 
-    public char getWhiteBalance() {
+    public String getWhiteBalance() {
         return whiteBalance;
     }
 
-    public void setWhiteBalance(char whiteBalance) {
+    public void setWhiteBalance(String whiteBalance) {
         this.whiteBalance = whiteBalance;
     }
 }

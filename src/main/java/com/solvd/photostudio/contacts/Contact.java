@@ -1,60 +1,56 @@
 package com.solvd.photostudio.contacts;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 import java.util.Objects;
 
 public class Contact {
-    private String location;
-    private String mail;
-    private String phoneNumber;
+    private static String location;
+    private static String mail;
+    private static String phoneNumber;
 
     public Contact() {
     }
-
+    private static final Logger logger = LogManager.getLogger(Contact.class);
     public Contact(String location, String mail, String phoneNumber) {
-        this.location = location;
-        this.mail = mail;
-        this.phoneNumber = phoneNumber;
+        Contact.location = location;
+        Contact.mail = mail;
+        Contact.phoneNumber = phoneNumber;
     }
 
-    public String getLocation() {
+    public static String getLocation() {
         return location;
     }
 
     public void setLocation(String location) {
-        this.location = location;
+        Contact.location = location;
     }
 
-    public String getMail() {
+    public static String getMail() {
         return mail;
     }
 
     public void setMail(String mail) {
-        this.mail = mail;
+        Contact.mail = mail;
     }
 
-    public String getPhoneNumber() {
+    public static String getPhoneNumber() {
         return phoneNumber;
     }
 
     public void setPhoneNumber(String phoneNumber) {
-        this.phoneNumber = phoneNumber;
+        Contact.phoneNumber = phoneNumber;
     }
+
 
     @Override
     public String toString() {
         return "Location = " + getLocation() +
                 ", Mail = " + getMail() +
-                ", PhoneNumber = " + getPhoneNumber();
+                ", Phone Number = " + getPhoneNumber();
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (!(o instanceof Contact)) return false;
-        Contact that = (Contact) o;
-        System.out.print("Same phone number : ");
-        return getPhoneNumber() == that.getPhoneNumber();
-    }
 
     @Override
     public int hashCode() {

@@ -5,32 +5,32 @@ import com.solvd.photostudio.abstractclassses.Camera;
 import java.util.Objects;
 
 public class PhotoCamera extends Camera {
-    private String pictureStyle; //Landscape or Portrait
+    private SceneMode sceneMode; //Landscape or Portrait
 
     public PhotoCamera() {
     }
 
-    public PhotoCamera(String cameraType, char imageQuality, char colorSpace, char whiteBalance, String pictureStyle) {
+    public PhotoCamera(String cameraType, String imageQuality, String colorSpace, String whiteBalance, SceneMode sceneMode) {
         super(cameraType, imageQuality, colorSpace, whiteBalance);
-        this.pictureStyle = pictureStyle;
+        this.sceneMode = sceneMode;
     }
 
-    public String getPictureStyle() {
-        return pictureStyle;
+    public SceneMode getSceneMode() {
+        return sceneMode;
     }
 
-    public void setPictureStyle(String pictureStyle) {
-        this.pictureStyle = pictureStyle;
+    public void setSceneMode(SceneMode sceneMode) {
+        this.sceneMode = sceneMode;
     }
 
     @Override
     public String toString() {
-        return
-                "{Camera Type=" + getCameraType() + '\'' +
+        return "PhotoCamera:{" +
+                "Camera Type=" + getCameraType() +
                 ", image Quality=" + getImageQuality() +
                 ", color Space=" + getColorSpace() +
                 ", white Balance=" + getWhiteBalance() +
-                ", picture style =" + getPictureStyle() + "}";
+                ", picture style =" + getSceneMode() + "}";
     }
 
     @Override
@@ -44,5 +44,15 @@ public class PhotoCamera extends Camera {
     @Override
     public int hashCode() {
         return Objects.hash(getCameraType());
+    }
+
+    public enum SceneMode {
+        landscape,
+        portrait,
+        closeup,
+        sports,
+        child,
+        flowers,
+        night
     }
 }
