@@ -1,6 +1,7 @@
 package com.solvd.photostudio.equipments;
 
 import com.solvd.photostudio.abstractclassses.Camera;
+import com.solvd.photostudio.enums.SceneMode;
 
 import java.util.Objects;
 
@@ -44,15 +45,5 @@ public class PhotoCamera extends Camera {
     @Override
     public int hashCode() {
         return Objects.hash(getCameraType());
-    }
-
-    public enum SceneMode {
-        landscape,
-        portrait,
-        closeup,
-        sports,
-        child,
-        flowers,
-        night
     }
 }

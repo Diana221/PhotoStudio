@@ -8,6 +8,7 @@ import java.util.Objects;
 
 public class Model extends Person {
     private int experience;
+
     private static final Logger logger = LogManager.getLogger(Model.class);
 
     public Model() {

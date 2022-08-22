@@ -1,13 +1,11 @@
 package com.solvd.photostudio.photoShoot;
 
-import java.util.Objects;
-
 public class StudioType {
     private int hallsNumber;
     private String backgroundType;
-    private Style style;
+    private String style;
 
-    public StudioType(int hallsNumber, String backgroundType, Style style) {
+    public StudioType(int hallsNumber, String backgroundType, String style) {
         this.hallsNumber = hallsNumber;
         this.backgroundType = backgroundType;
         this.style = style;
@@ -29,42 +27,20 @@ public class StudioType {
         this.backgroundType = backgroundType;
     }
 
-    public Style getStyle() {
+    public String getStyle() {
         return style;
     }
 
-    public void setStyle(Style style) {
+    public void setStyle(String style) {
         this.style = style;
     }
 
     @Override
     public String toString() {
         return
-
                 "{style:" + getStyle() + "}";
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (!(o instanceof StudioType)) return false;
-        StudioType that = (StudioType) o;
-        return Objects.equals(getStyle(), that.getStyle());
-    }
 
-    @Override
-    public int hashCode() {
-        return Objects.hash(getStyle());
-    }
 
-    public enum Style {
-        casual,
-        light,
-        glamour,
-        corporate,
-        forest,
-        wedding,
-        fashion,
-        birthday
-    }
 }

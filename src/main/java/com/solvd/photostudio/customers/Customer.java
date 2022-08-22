@@ -2,6 +2,7 @@ package com.solvd.photostudio.customers;
 
 import com.solvd.photostudio.abstractclassses.Person;
 import com.solvd.photostudio.employees.Photographer;
+import com.solvd.photostudio.enums.Sale;
 import com.solvd.photostudio.exceptions.WrongStudioNumberException;
 import com.solvd.photostudio.infogeneration.InfoGeneration;
 import com.solvd.photostudio.interfaces.iBackCall;
@@ -63,9 +64,8 @@ public class Customer extends Person implements iRent, iBackCall, iPhotoShoot {
                         logger.info(getName() + ", studio number \"" + studioNumber + "\" was rented!");
                         logger.info("Information about studio: " + studios.get(n));
                         if (isRegularCustomer()) {
-
-                            float salePrice = studios.get(n).getPrice() - (((float) studios.get(n).getPrice() / 100) * Customer.Sale.FIVE.getSale());
-                            logger.info(getName() + ", as a regular customer you have a sale " + Customer.Sale.FIVE.getSale() + "%!. Your price for studio is " + (int) salePrice + "$ instead of " + studios.get(n).getPrice() + "$");
+                            float salePrice = studios.get(n).getPrice() - (((float) studios.get(n).getPrice() / 100) * Sale.FIVE.getSale());
+                            logger.info(getName() + ", as a regular customer you have a sale " + Sale.FIVE.getSale() + "%!. Your price for studio is " + (int) salePrice + "$ instead of " + studios.get(n).getPrice() + "$");
                         }
                         n = 1;
                     } else {
@@ -164,19 +164,6 @@ public class Customer extends Person implements iRent, iBackCall, iPhotoShoot {
     @Override
     public void callBack(Customer customer) {
         logger.info(" We will call you back soon to number " + customer.getPhoneNumber() + "! Thank you!");
-    }
-
-    public enum Sale {
-        FIVE(5), TEN(10), FIFTEEN(15);
-        private final int sale;
-
-        private Sale(int sale) {
-            this.sale = sale;
-        }
-
-        public int getSale() {
-            return sale;
-        }
     }
 
     @Override
