@@ -1,6 +1,6 @@
 package com.solvd.photostudio.interfaces;
 
-public interface iPhotoShoot {
+public interface IPhotoShoot {
 
         String photoShoot();
 

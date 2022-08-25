@@ -5,9 +5,9 @@ import com.solvd.photostudio.employees.Photographer;
 import com.solvd.photostudio.enums.Sale;
 import com.solvd.photostudio.exceptions.WrongStudioNumberException;
 import com.solvd.photostudio.infogeneration.InfoGeneration;
-import com.solvd.photostudio.interfaces.iBackCall;
-import com.solvd.photostudio.interfaces.iPhotoShoot;
-import com.solvd.photostudio.interfaces.iRent;
+import com.solvd.photostudio.interfaces.IBackCall;
+import com.solvd.photostudio.interfaces.IPhotoShoot;
+import com.solvd.photostudio.interfaces.IRent;
 import com.solvd.photostudio.photoShoot.Studio;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.logging.log4j.LogManager;
@@ -17,7 +17,7 @@ import java.util.LinkedList;
 import java.util.Objects;
 import java.util.Scanner;
 
-public class Customer extends Person implements iRent, iBackCall, iPhotoShoot {
+public class Customer extends Person implements IRent, IBackCall, IPhotoShoot {
     private static final Logger logger = LogManager.getLogger(Customer.class);
     private boolean regularCustomer;
 

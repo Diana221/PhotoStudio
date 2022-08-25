@@ -11,17 +11,24 @@ import java.util.Objects;
 public class ModelingAgency {
     private static final Logger logger = LogManager.getLogger(ModelingAgency.class);
     private String agencyName;
-    private int phoneNumber;
+    private String phoneNumber;
     private ArrayList<Model> models = new ArrayList<>();
-    private boolean isOpen = false;
+    private boolean isOpen = true;
 
     public ModelingAgency() {
     }
 
-    public ModelingAgency(String agencyName, int phoneNumber, ArrayList<Model> models, boolean isOpen) {
+    public ModelingAgency(String agencyName, String phoneNumber, ArrayList<Model> models, boolean isOpen) {
         this.agencyName = agencyName;
         this.phoneNumber = phoneNumber;
         this.models = models;
+        this.isOpen = isOpen;
+    }
+
+
+    public ModelingAgency(String agencyName, String phoneNumber, boolean isOpen) {
+        this.agencyName = agencyName;
+        this.phoneNumber = phoneNumber;
         this.isOpen = isOpen;
     }
 
@@ -41,35 +48,26 @@ public class ModelingAgency {
         this.agencyName = agencyName;
     }
 
-    public int getPhoneNumber() {
+    public String getPhoneNumber() {
         return phoneNumber;
     }
 
-    public void setPhoneNumber(int phoneNumber) {
+    public void setPhoneNumber(String phoneNumber) {
         this.phoneNumber = phoneNumber;
     }
 
-
-    private void  openOrClose() {
-        String status;
-        if(isOpen)
-        {
-            status = "open";
-        }
-        else
-        {
-            status = "close";
-        }
-        logger.info("Modeling Agency is " + status + " for now!");
+    public boolean isOpen() {
+        return isOpen;
     }
 
+    private void openMessage() {
+          logger.info( "Modeling Agency is open!)");
+    }
 
     @Override
     public String toString() {
         return
-                "AgencyName='" + getAgencyName() + '\'' +
-                        ", PhoneNumber=" + getPhoneNumber() +
-                        ", Models=" + getModels();
+                getAgencyName() + "(" + getPhoneNumber() + ")";
     }
 
     @Override
@@ -77,7 +75,7 @@ public class ModelingAgency {
         if (this == o) return true;
         if (!(o instanceof ModelingAgency)) return false;
         ModelingAgency that = (ModelingAgency) o;
-        return getPhoneNumber() == that.getPhoneNumber() &&
+        return getPhoneNumber().equals(that.getPhoneNumber()) &&
                 Objects.equals(getAgencyName(), that.getAgencyName());
     }
 

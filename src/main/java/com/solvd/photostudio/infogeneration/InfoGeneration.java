@@ -1,5 +1,6 @@
 package com.solvd.photostudio.infogeneration;
 
+import com.solvd.photostudio.agency.ModelingAgency;
 import com.solvd.photostudio.contacts.Contact;
 import com.solvd.photostudio.customers.Customer;
 import com.solvd.photostudio.employees.Photographer;
@@ -9,7 +10,7 @@ import com.solvd.photostudio.equipments.Equipments;
 import com.solvd.photostudio.equipments.PhotoCamera;
 import com.solvd.photostudio.exceptions.WrongAgeException;
 import com.solvd.photostudio.exceptions.WrongPhoneNumberException;
-import com.solvd.photostudio.interfaces.iByeMessage;
+import com.solvd.photostudio.interfaces.IByeMessage;
 import com.solvd.photostudio.photoShoot.AdditionalServices;
 import com.solvd.photostudio.photoShoot.InteriorItems;
 import com.solvd.photostudio.photoShoot.Studio;
@@ -31,7 +32,6 @@ public class InfoGeneration {
 
     private static final Logger logger = LogManager.getLogger(InfoGeneration.class.getName());
     private static final String path = "src/main/resources/customer.txt";
-    ;
 
     static public LinkedList<Studio> GenerationStudioInfo() {
         StudioType studioType_1 = new StudioType(1, "black", Style.CASUAL.getValue());
@@ -120,6 +120,8 @@ public class InfoGeneration {
     static public void PhotographerInfo() {
         LinkedList<Photographer> p = GenerationPhotographerInfo();
         for (Photographer photographer : p) logger.info(photographer + "\n");
+
+
     }
 
     static public void CustomerInfo() {
@@ -131,6 +133,33 @@ public class InfoGeneration {
         LinkedList<Studio> p = GenerationStudioInfo();
         for (Studio studio : p) logger.info(studio + "\n");
     }
+
+    static public void ModelingAgencyInfo() {
+        ArrayList<ModelingAgency> modelingAgencies = GenerationModelingAgencyInfo();
+
+
+        logger.info("Opened Modeling Agencies:");
+        modelingAgencies.stream()
+                .filter(ModelingAgency::isOpen)
+                .forEach(System.out::println);
+        logger.info("Closed Modeling Agencies:");
+        modelingAgencies.stream()
+                .filter(str -> !str.isOpen())
+                .forEach(System.out::println);
+    }
+
+
+    static public ArrayList<ModelingAgency> GenerationModelingAgencyInfo() {
+        ModelingAgency modelingAgency_1 = new ModelingAgency("Cool", "+380984542332", true);
+        ModelingAgency modelingAgency_2 = new ModelingAgency("Beautiful", "+380985251213", false);
+
+        ArrayList<ModelingAgency> modelingAgencies = new ArrayList<>();
+        modelingAgencies.add(modelingAgency_1);
+        modelingAgencies.add(modelingAgency_2);
+
+        return modelingAgencies;
+    }
+
 
     static public ArrayList<Contact> GenerationContactInfo() {
         Contact contact_1 = new Contact("Kyiv", "kyivphotostudio@gmail.com", "+380984542332");
@@ -368,15 +397,15 @@ public class InfoGeneration {
                                 logger.info("Empty note");
                             } else {
                                 logger.info("Your note: " + StringUtils.normalizeSpace(note));
-                                 FileUtils.writeStringToFile(file, purchase + "\nNoted: " +
-                                 StringUtils.normalizeSpace(note), "ISO-8859-1");
+                                FileUtils.writeStringToFile(file, purchase + "\nNoted: " +
+                                        StringUtils.normalizeSpace(note), "ISO-8859-1");
                                 customerNote = "\nNoted: " + StringUtils.normalizeSpace(note);
                             }
                             break;
                         }
                         case 0: {
                             //Lambda Expression
-                            iByeMessage bye = () -> "\nThank you!";
+                            IByeMessage bye = () -> "\nThank you!";
                             logger.info(bye.bye());
                             Studio.show("We do not work on Wednesdays");
                             Greetings();
@@ -402,7 +431,8 @@ public class InfoGeneration {
                         "1 -> customers;\n" +
                         "2 -> studios;\n" +
                         "3 -> photographers;\n" +
-                        "4 <- back;\n"
+                        "4 -> modeling Agencies;\n" +
+                        "0 <- back;\n"
                 );
                 if (number_.hasNextInt()) {
                     number = number_.nextInt();
@@ -421,13 +451,17 @@ public class InfoGeneration {
                             break;
                         }
                         case 4: {
+                            ModelingAgencyInfo();
+                            break;
+                        }
+                        case 0: {
                             AdminChoose();
                             break;
                         }
                     }
                 }
             }
-            while (number != 4);
+            while (number != 0);
         } catch (Exception ex) {
             logger.error(ex.getMessage());
         }
@@ -443,7 +477,8 @@ public class InfoGeneration {
                         "1 -> customers;\n" +
                         "2 -> studios;\n" +
                         "3 -> photographers;\n" +
-                        "4 <- back;\n"
+                        "4 -> Modeling Agencies;\n" +
+                        "0 <- back;\n"
                 );
                 if (number_.hasNextInt()) {
                     number = number_.nextInt();
@@ -483,7 +518,6 @@ public class InfoGeneration {
                                 if (!find) {
                                     logger.info("There is no such studio!");
                                 }
-
                             } else {
                                 logger.info("There is no such studio!");
 
@@ -510,13 +544,36 @@ public class InfoGeneration {
                             break;
                         }
                         case 4: {
+                            Scanner agencyName_ = new Scanner(System.in);
+                            logger.info("\nEnter Modeling Agency`s name:\n"
+                            );
+                            String agencyName = agencyName_.next();
+                            ArrayList<ModelingAgency> modelingAgencies = GenerationModelingAgencyInfo();
+                            boolean answer = modelingAgencies.stream().anyMatch(str ->
+                                    str.getAgencyName().contains(agencyName));
+                            if (answer) {
+
+                                for (ModelingAgency modelingAgency : modelingAgencies)
+                                    if (modelingAgency.getAgencyName().equals(agencyName)) {
+                                        if (modelingAgency.isOpen()) {
+                                            logger.info("Modeling Agency is open!)");
+                                        } else {
+                                            logger.info("Modeling Agency is closed!(");
+                                        }
+                                    }
+                            } else {
+                                logger.warn("There is no such Modeling Agency!");
+                            }
+                            break;
+                        }
+                        case 0: {
                             AdminChoose();
                             break;
                         }
                     }
                 }
             }
-            while (number != 4);
+            while (number != 0);
         } catch (Exception ex) {
             logger.error(ex.getMessage());
         }

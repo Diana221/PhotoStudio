@@ -1,6 +1,6 @@
 package com.solvd.photostudio.interfaces;
 
-public interface iRent {
+public interface IRent {
     int rentStudio();
     String rentPhotographer();
 }

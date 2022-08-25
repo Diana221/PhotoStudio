@@ -1,6 +1,5 @@
 package com.solvd.photostudio.reflections;
 
-import com.solvd.photostudio.Main;
 import com.solvd.photostudio.agency.ModelingAgency;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -10,7 +9,7 @@ import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 
 public class ReflectionModelingAgency extends ModelingAgency {
-    private static final Logger logger = LogManager.getLogger(Main.class.getName());
+    private static final Logger logger = LogManager.getLogger(ReflectionModelingAgency.class.getName());
 
     public static void getVariable() throws NoSuchFieldException, IllegalAccessException, NoSuchMethodException,
             InvocationTargetException {
@@ -23,8 +22,14 @@ public class ReflectionModelingAgency extends ModelingAgency {
 
     public void getMethod() throws IllegalAccessException, NoSuchMethodException, InvocationTargetException {
         ReflectionModelingAgency reflectionModelingAgency = new ReflectionModelingAgency();
-        Method isClose = reflectionModelingAgency.getClass().getSuperclass().getDeclaredMethod("openOrClose");
+        Method isClose = reflectionModelingAgency.getClass().getSuperclass().getDeclaredMethod("openMessage");
         isClose.setAccessible(true);
         isClose.invoke(this, (Object[]) null);
+
     }
+
+
+
+
+
 }
